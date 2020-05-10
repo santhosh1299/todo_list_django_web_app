@@ -21,7 +21,7 @@ def signupuser(request):
                 user=User.objects.create_user(request.POST['username'],password=request.POST['password1'])
                 user.save()
                 login(request,user)
-                return redirect(currenttodos)
+                return redirect('currenttodo')
             except 	IntegrityError:
                 return render(request,'todo/signup.html',{'form':UserCreationForm(),'error':'Username already taken'})
 
@@ -47,7 +47,7 @@ def loginuser(request):
             return render(request,'todo/login.html',{'form':AuthenticationForm,'error':'Username and Password didn\'t match'}) 
         else:
              login(request,user)
-             return redirect(currenttodos)    
+             return redirect('currenttodo')    
 @login_required
 def createtodo(request):
     if request.method == "GET":
@@ -58,7 +58,7 @@ def createtodo(request):
             newtodo = form.save(commit=False)
             newtodo.user = request.user
             newtodo.save()
-            return redirect(currenttodos)
+            return redirect('currenttodo')
         except ValueError:
             return render(request,'todo/createtodo.html',{'form':TodoForm(),'error':'Bad data passed .Try again'})
 @login_required
@@ -71,7 +71,7 @@ def viewtodo(request,todo_pk):
         try:
             form =TodoForm(request.POST,instance=todo)
             form.save()
-            return redirect(currenttodos)
+            return redirect('currenttodo')
         except ValueError:
              return render(request,'todo/viewtodo.html',{'todo':todo,'form':form,'error':'bad info'})
 @login_required
