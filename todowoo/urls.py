@@ -21,10 +21,18 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     #auth
-
+    path('',views.home,name='home'),
     path('signup/',views.signupuser,name='signupuser'),
+    path('login/',views.loginuser,name='loginuser'),
+    path('logout/',views.logoutuser,name='logoutuser'),
+    
 
+    #current
     path('current/',views.currenttodos,name='currenttodo'),
+    path('create/',views.createtodo,name='createtodo'),
+    path('todo/<int:todo_pk>',views.viewtodo,name='viewtodo'),
+    path('todo/<int:todo_pk>/complete',views.completetodo,name='completetodo'),
+
 
     
 ]
